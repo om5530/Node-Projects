@@ -14,11 +14,12 @@ mongoose
       useNewUrlParser: true,
     }
   )
-  .then(() => console.log(" 😎😎 MongoDb is connected"))
+  .then(() => console.log("MongoDb is connected"))
   .catch((err) => console.log(err));
 
 app.use("/", route);
+const port = process.env.PORT || 3000
 
-app.listen(process.env.PORT || 3000, function () {
-  console.log(" 😍😍Express app running on port" + (process.env.PORT || 3000));
+app.listen(port || 3000, function () {
+  console.log(`Express app running on port ${port}...`);
 });
