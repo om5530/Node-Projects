@@ -1,41 +1,34 @@
-const mongoose = require("mongoose");
+const express = require("express");
+const router = express.Router();
 
-const newSchema = new mongoose.Schema(
-  {
-    fname: {
-      type:String,
-      required:"First Name is Required" ,
-      trim:true
-    },
+const { createAuthor, loginAuthor } = require("../controllers/authorController.js");
+const { createBlogs, getBlogs, updateBlogs, deleteBlog, deleteByQuery } = require("../controllers/blogController.js");
+const { login, AuthorizationById } = require("../middleware/middleware.js")
 
-    lname: {
-      type:String,
-      required:"Last Name is Required",
-      trim:true
-    },
+//--------------------------------------------------------------------------------------------------------------------------------
+// AUTHOR ROUTES
+// Create A New Author.
+router.post("/createAuthor", createAuthor);
 
-    title: {
-      type: String,
-      required: true,
-      enum: ["Mr", "Mrs", "Miss"],
-      required:"Title is Required"
-    },
+// Login to Author.
+router.post("/login", loginAuthor);
 
-    email: {
-      type: String,
-      unique: true,
-      lowercase:true,
-      required: "Email is Required",
-      trim:true,
-    },
+//--------------------------------------------------------------------------------------------------------------------------------
+// BLOG ROUTES (PROTECTED API'S)
 
-    password: {
-      type: String,
-      required: "Password is Required",
-      trim:true
-    },
-  },
-  { timestamps: true }
-);
+// Create a New Blog.
+router.post("/createBlogs", login, createBlogs);
 
-module.exports = mongoose.model("Author", newSchema);
+// Get Blogs by Query.
+router.get("/getBlogs", login, getBlogs);
+
+// Update Blog by BlogId.
+router.put("/UpdateBlogs/:blogId", login, AuthorizationById, updateBlogs);
+
+// Delete Blog by BlogId.
+router.delete("/deleteBlogsById/:blogId", login, AuthorizationById, deleteBlog);
+
+// Delete By Query Params.
+router.delete("/deleteBlogsByQuery", login, deleteByQuery);
+
+module.exports = router;

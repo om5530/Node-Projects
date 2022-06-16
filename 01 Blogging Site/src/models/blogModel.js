@@ -1,34 +1,36 @@
 const mongoose = require("mongoose");
 
-const newSchema = new mongoose.Schema(
+const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: "Blog title is required",
+      required: true,
       trim:true
     },
 
     body: {
       type: String,
-      required: "Blog body is required",
+      required: true,
       trim:true
     },
 
     authorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Author",
-      required: "AuthorId is required"
+      required: true,
+      trim: true
     },
 
-    tags: [{type:String,trim:true}],
+    tags: [{type:String,trim:true,lowercase:true}],
 
     category: {
       type: String,
-      required:"Category is required",
-      trim:true
+      required: true,
+      trim: true,
+      lowercase: true
     },
 
-    subcategory:[{type:String,trim:true}],
+    subcategory: [{ type: String, trim: true, lowercase: true }],
 
     isDeleted: {
       type: Boolean,
@@ -54,4 +56,4 @@ const newSchema = new mongoose.Schema(
 );
 
 
-module.exports = mongoose.model("Blog", newSchema);
+module.exports = mongoose.model("Blog", blogSchema);

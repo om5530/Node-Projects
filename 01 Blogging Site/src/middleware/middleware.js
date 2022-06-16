@@ -5,13 +5,9 @@ const isValidObjectId = function (objectId) {
 };
 const blogModels= require("../models/blogModel.js")
 
-
-
-const login = async function(req,res,next){
-
+const login = async (req,res,next)=>{
 
     try{
-
 
     // take token from client 
     let token = req.headers["x-Api-key"]
@@ -38,7 +34,7 @@ res.status(401).send({ status: false, err : "Token is Invalid" })
 }
 
 
-const AuthorizationById = async function (req, res, next) {
+const AuthorizationById = async  (req, res, next) =>{
   try {
     let BlogId =req.params.blogId
     if (!isValidObjectId(BlogId))
@@ -68,5 +64,4 @@ const AuthorizationById = async function (req, res, next) {
 };
 
 
-module.exports.AuthorizationById = AuthorizationById ;
-module.exports.login = login;
+module.exports={ AuthorizationById,login}

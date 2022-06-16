@@ -1,16 +1,16 @@
 const mongoose = require("mongoose");
 
-const newSchema = new mongoose.Schema(
+const authorSchema = new mongoose.Schema(
   {
     fname: {
       type:String,
-      required:"First Name is Required" ,
+      required:true ,
       trim:true
     },
 
     lname: {
       type:String,
-      required:"Last Name is Required",
+      required:true,
       trim:true
     },
 
@@ -18,24 +18,23 @@ const newSchema = new mongoose.Schema(
       type: String,
       required: true,
       enum: ["Mr", "Mrs", "Miss"],
-      required:"Title is Required"
     },
 
     email: {
       type: String,
       unique: true,
       lowercase:true,
-      required: "Email is Required",
+      required: true,
       trim:true,
     },
 
     password: {
       type: String,
-      required: "Password is Required",
+      required:true,
       trim:true
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Author", newSchema);
+module.exports = mongoose.model("Author", authorSchema);
