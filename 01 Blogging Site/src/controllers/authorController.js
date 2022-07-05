@@ -61,7 +61,7 @@ const createAuthor = async (req, res) => {
     // Validate the already existing email
     let alreadyExist = await authorModels.findOne({ email: email });
     if (alreadyExist) {
-      res.status(400).send({ status: false, message: "Email address is already registered"});
+     return  res.status(400).send({ status: false, message: "Email address is already registered"});
     } 
 
     // Validate the email of author is Coming in data or not
@@ -113,7 +113,10 @@ const loginAuthor = async (req, res) => {
  
   // Find Author in Author Collection
     let author = await authorModels.findOne({ email: email, password: password })
-  
+
+    if(!author){
+      return res.status(400).send({ status: false, message: "Invalid Credentials" });
+    }
   // Generating JWT  
     let token = jwt.sign({ authorId: author._id.toString(), Name: author.fname }, "Blogging-Site")
   
@@ -121,7 +124,7 @@ const loginAuthor = async (req, res) => {
   res.setHeader("x-api-key", token);
 
   // send response to  user that Author is successfully logged in
-  res.status(200).send({status: true, message: "Author login successfully", data: { token }});
+ return res.status(200).send({status: true, message: "Author login successfully", data: { token }});
 
   }
   catch (err) {
