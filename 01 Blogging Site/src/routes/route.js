@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { createAuthor, loginAuthor } = require("../controllers/authorController.js");
 const { createBlogs, getBlogs, updateBlogs, deleteBlog, deleteByQuery } = require("../controllers/blogController.js");
-const { login, AuthorizationById } = require("../middleware/middleware.js")
+const { authentication, AuthorizationById } = require("../middleware/middleware.js")
 
 //--------------------------------------------------------------------------------------------------------------------------------
 // AUTHOR ROUTES
@@ -17,18 +17,18 @@ router.post("/login", loginAuthor);
 // BLOG ROUTES (PROTECTED API'S)
 
 // Create a New Blog.
-router.post("/createBlogs", login, createBlogs);
+router.post("/createBlogs", authentication, createBlogs);
 
 // Get Blogs by Query.
-router.get("/getBlogs", login, getBlogs);
+router.get("/getBlogs", authentication, getBlogs);
 
 // Update Blog by BlogId.
-router.put("/UpdateBlogs/:blogId", login, AuthorizationById, updateBlogs);
+router.put("/UpdateBlogs/:blogId", authentication, AuthorizationById, updateBlogs);
 
 // Delete Blog by BlogId.
-router.delete("/deleteBlogsById/:blogId", login, AuthorizationById, deleteBlog);
+router.delete("/deleteBlogsById/:blogId", authentication, AuthorizationById, deleteBlog);
 
 // Delete By Query Params.
-router.delete("/deleteBlogsByQuery", login, deleteByQuery);
+router.delete("/deleteBlogsByQuery", authentication, deleteByQuery);
 
 module.exports = router;
