@@ -120,11 +120,12 @@ const loginAuthor = async (req, res) => {
   // Generating JWT  
     let token = jwt.sign({ authorId: author._id.toString(), Name: author.fname }, "Blogging-Site")
   
+    let authorId = author._id
   // Send the token to Response Header
-  res.setHeader("x-api-key", token);
+  // res.setHeader("authorization", token);
 
   // send response to  user that Author is successfully logged in
- return res.status(200).send({status: true, message: "Author login successfully", data: { token }});
+ return res.status(200).send({status: true, message: "Author login successfully", data: { token , authorId }});
 
   }
   catch (err) {
