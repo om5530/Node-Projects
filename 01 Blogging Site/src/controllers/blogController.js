@@ -89,55 +89,34 @@ const getBlogs = async  (req, res)=> {
   try {
 
     let queryData = req.query;
+    const { authorId, category, tags, subcategory } = queryData
 
     // Check queries are coming or not
-    if (Object.keys(queryData).length == 0){ 
+    if (!isValidBody(queryData)) { 
       return res.status(400).send({ status: false, msg: "Invalid request !! Please Provide Blog Queries For Finding Blogs"})
     }
 
     // check whether this of data
-    if (!(queryData.authorId ||queryData.category ||queryData.tags ||queryData.subcategory)){
+    if (!(authorId || category || tags || subcategory)) {
       return res.status(400).send({ status: false, msg: "Invalid Filters!!!. Please Provide Valid Filters" });
     }
-    
     // Storing Decoded Token into variable named decodedToken
     let decodedToken =  req.decodedToken
     // Authorize the author that is requesting to find blogs
     // Validate the authorId with help of decoded Token AuthorId if it is present in req.query
-    if(queryData.authorId != null && queryData.authorId != decodedToken.authorId ){
-    return res.status(400).send({status: false , msg: "Author is Different"})
+
+    if (!authorId) {
+      return res.status(400).send({ status: false, msg: "Author Id is mandatory for getting blogs" })
     }
 
-    // exclude title and body
-    if (req.query.title && !req.query.body) delete req.query.title;
-    else if (req.query.body && !req.query.title) delete req.query.body;
-    else if (req.query.title && req.query.body) {
-      delete req.query.title;
-      delete req.query.body;
+    if (authorId != decodedToken.authorId) {
+      return res.status(400).send({ status: false, msg: "Author is Different" })
     }
 
-    queryData = req.query;
     
     // Check Author Id is coming or not if coming then Valid it 
-    if (queryData.authorId && !isValidObjectId(queryData.authorId)){
+    if (!isValidObjectId(authorId)) {
       return res.status(400).send({ status: false, msg: "AuthorId is Invalid" });
-    }
-    
-    // converting given fields to the proper format
-    if( queryData.category) queryData.category = queryData.category.toLowerCase().trim()  // Remove the space in category and save in lowercase
-    if( typeof queryData.tags == 'string') queryData.tags = queryData.tags.toLowerCase().trim()  // Remove the space in tags and save in lowercase
-    if( typeof queryData.subcategory == 'string') queryData.subcategory = queryData.subcategory.toLowerCase().trim()   //Remove the space in subcategory and save in lowercase
-  
-    // for array data like tags and subcategory
-    for (let key in queryData) {
-      if (Array.isArray(queryData[key])) {
-          let arr=[];
-          for (let i = 0; i < queryData[key].length; i++) {
-                  if(queryData[key][i].trim().length>0)
-              arr.push(queryData[key][i].toLowerCase().trim())
-          }
-          queryData[key] = [...arr];
-      }
     }
   
     // We have to find blogs which are deleted and blogs which are published
@@ -150,7 +129,7 @@ const getBlogs = async  (req, res)=> {
       return res.status(404).send({ status: false, msg: "Document Not Found" });
     }
 
-    return res.status(200).send({ status: true, msg: "Blog Data Successfully Fetched", data: blogData, nbHits: blogData.length });
+    return res.status(200).send({ status: true, blogCount: blogData.length, msg: "Blog Data Successfully Fetched", data: blogData });
 
   } catch (err) {
     return res.status(500).send({ status: false, err: err.message });
