@@ -67,7 +67,7 @@ const createBlogs = async  (req, res)=> {
     let authorIde = await authorModels.findById(authorId)
         
     if (!authorIde) {
-    return res.status(400).send({status: false , msg:" Author is Not Present In Database"})   
+    return res.status(400).send({status: false , msg:"Author is Not Present In Database"})   
     }
   
     // Lets Add the Date isPublished if True 
