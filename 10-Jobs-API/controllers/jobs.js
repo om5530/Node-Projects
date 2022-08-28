@@ -1,6 +1,7 @@
 const jobModel = require('../models/Job')
 const {StatusCodes} = require('http-status-codes');
-const {BadRequestError,UnauthenticatedError,NotFoundError} = require('../errors')
+const {BadRequestError,UnauthenticatedError,NotFoundError} = require('../errors');
+const { findByIdAndDelete, findByIdAndRemove } = require('../models/Job');
 
 const createJob = async (req, res) => {
     req.body.createdBy = req.user.userId
@@ -21,9 +22,9 @@ const getJob = async (req, res) => {
        _id: jobId,
        createdBy: userId,
      });
-     if (!job) {
-       throw new NotFoundError(`No job with id ${jobId}`);
-     }
+    //  if (!job) {
+    //    throw new NotFoundError(`No job with id ${jobId}`);
+    //  }
      res.status(StatusCodes.OK).send({ job });
 };
 
@@ -41,12 +42,22 @@ const updateJob = async (req, res) => {
       if (!job) {
         throw new NotFoundError(`No job with id ${jobId}`);
       }
-       res.status(StatusCodes.OK).json({ job });
+       res.status(StatusCodes.OK).send({ job });
 };
 
 const deleteJob = async (req, res) => {
-  res.send('delete job');
-};
+  const {
+    body: { company, position },
+    user: { userId },
+    params: { id: jobId },
+  } = req; //nested Destructuring
+  const job = await jobModel.findByIdAndRemove({ _id: jobId, createdBy: userId });
+
+      if (!job) {
+        throw new NotFoundError(`No job with id ${jobId}`);
+      }
+      res.status(StatusCodes.OK).send({ job });
+};;
 
 module.exports = {
   getAllJobs,
