@@ -2,6 +2,11 @@ require('dotenv').config();
 require('express-async-errors');
 
 
+//Swagger
+const swaggerUI = require('swagger-ui-express')
+const YAML = require('yamljs')
+const swaggerDocument = YAML.load('./swagger.yaml')
+
 //extra security packages
 const helmet = require('helmet')
 const cors = require('cors')
@@ -32,6 +37,7 @@ const jobsRouter = require('./routes/jobs')
 const notFoundMiddleware = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 app.use(express.json());
 app.use(helmet())
 app.use(cors())
