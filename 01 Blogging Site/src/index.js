@@ -28,7 +28,6 @@ const port = process.env.PORT || 3000
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(express.json());
   app.use(helmet());
-  app.use(cors());
   app.use(xss());
   app.set('trust proxy', 1);
   app.use(
