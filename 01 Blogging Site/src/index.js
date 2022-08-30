@@ -16,7 +16,6 @@ const swaggerDocument = YAML.load('./swagger.yaml')
 
 //extra security packages
 const helmet = require('helmet')
-const cors = require('cors')
 const xss = require('xss-clean')
 const rateLimiter = require('express-rate-limit')
 
@@ -24,7 +23,9 @@ app.use(cors())
 app.use("/", route);
 const port = process.env.PORT || 3000
 
-
+app.get('/',(req,res)=>{
+  res.send('hii')
+})
   app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
   app.use(express.json());
   app.use(helmet());
@@ -38,7 +39,7 @@ const port = process.env.PORT || 3000
       legacyHeaders: false, // Disable the `X-RateLimit-*` headers
     })
   );
-
+console.log('hi')
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI)
