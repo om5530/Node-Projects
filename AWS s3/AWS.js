@@ -1,8 +1,6 @@
 
 const aws = require('aws-sdk');
 
-
-
 //Promises
 // you  can never use await on callback if you awaited something,then you can be sure it is within a promise
 
@@ -38,7 +36,6 @@ aws.config.update({
 //     }); //It uploads file which is in body with the help of ACL, bucket and key
 //   });
 // };
-
 
 const uploadFile = async (file) => {
   // Promisify the Function because we can not use await on callBack Function

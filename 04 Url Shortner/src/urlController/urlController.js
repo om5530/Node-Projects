@@ -7,20 +7,19 @@ const redis = require("redis");
 const { promisify } = require("util");
 
 
-// Connect to Redis 
-    const redisClient = redis.createClient(
-        18740,
-        "redis-18740.c264.ap-south-1-1.ec2.cloud.redislabs.com",
-        { no_ready_check : true }
-    );
+//Connect to redis
 
-    redisClient.auth("TPROsXKiJC9IYce2EdFK1m5LI0iPp77Q", (err) => {
-        if (err) throw err ;
-    });
-
-    redisClient.on("connect", async function () {
-        console.log("Connected to Redis......😍😍");
-    });
+const redisClient = redis.createClient(
+    11713,
+    "redis-11713.c264.ap-south-1-1.ec2.cloud.redislabs.com",
+    { no_ready_check: true }
+);
+redisClient.auth("uDwPvY62yVwScr0397qSOoEfXrI0kYb2", function (err) {
+    if (err) throw err;
+});
+redisClient.on("connect", async function () {
+    console.log("Connected to Redis..");
+});
 
 
     // Connection setup for redis 
