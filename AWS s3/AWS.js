@@ -4,7 +4,7 @@ const aws = require('aws-sdk');
 
 
 //Promises
-// you  can never use auait on callback if you awaited something,then you can be sure it is within a promise
+// you  can never use await on callback if you awaited something,then you can be sure it is within a promise
 
 //how to write promise - wrap your entire code inside:"return new promise (function(resolve, reject){"... and when error return reject (err) ... else when all ok and you  have data, return resolve (data)"}"
 
