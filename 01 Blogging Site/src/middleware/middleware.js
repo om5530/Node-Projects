@@ -13,11 +13,14 @@ const authentication = async (req,res,next)=>{
     let token1 =  req.headers['authorization']
 
     if( token1 == undefined ) { token= req.headers["Authorization"] }
-
+  const authHeader = req.headers.authorization;
         // if No token found then send error
-        if (!token1) {
-          return res.status(401).send({ status: false, msg: "Authentication token is required" })
-        }
+          if (!token1 || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).send({
+              status: false,
+              msg: 'Authentication token is required',
+            });
+          }
 
             // Split that Bearer Token 
           let token = token1.split(' ')[1]
@@ -51,6 +54,7 @@ catch(err)
 const AuthorizationById = async  (req, res, next) =>{
   try {
     let BlogId =req.params.blogId
+    
     if (!isValidObjectId(BlogId))
     {
       return res.status(400).send({ status: false, msg: "Invalid Blog-Id" });
