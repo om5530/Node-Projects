@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("src/Controllers/userController");
-const bookController = require("src/Controllers/bookController");
-const reviewController = require("src/Controllers/reviewController");
-const mw = require("src/middleware/middleware");
+const userController = require("../Controllers/userController");
+const bookController = require("../Controllers/bookController");
+const reviewController = require("../Controllers/reviewController");
+const mw = require("../middleware/middleware");
 
 //-----------------------------USER API's
 router.post("/registerUser",userController.register);

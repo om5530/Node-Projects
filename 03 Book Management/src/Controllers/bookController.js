@@ -1,7 +1,7 @@
-const bookModel = require('src/models/bookModel');
-const userModel = require('src/models/userModel');
-const reviewModel = require('src/models/reviewModel');
-const validator = require("src/validator/validator")
+const bookModel = require('../models/bookModel');
+const userModel = require('../models/userModel');
+const reviewModel = require('../models/reviewModel');
+const validator = require("../validator/validator")
 
 
 // CREATE BOOK

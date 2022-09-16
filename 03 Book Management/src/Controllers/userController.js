@@ -1,6 +1,6 @@
-const userModel = require("src/models/userModel");
+const userModel = require("../models/userModel");
 const jwt = require("jsonwebtoken");
-const validator = require("src/validator/validator")
+const validator = require("../validator/validator")
 
 // Register User
 const register = async(req, res) => {
