@@ -12,6 +12,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('../swagger.yaml');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(cors());
 app.use('/', route);
@@ -20,7 +21,6 @@ const port = process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send('hii');
 });
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 const start = async () => {
   try {
