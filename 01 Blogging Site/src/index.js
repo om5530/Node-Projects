@@ -8,19 +8,11 @@ const connectDB = require('./db/connect');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-//Swagger
-const swaggerUI = require('swagger-ui-express');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('../swagger.yaml');
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 app.use(cors());
 app.use('/', route);
 const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.send('hii');
-});
 
 const start = async () => {
   try {

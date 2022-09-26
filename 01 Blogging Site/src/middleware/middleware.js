@@ -1,8 +1,5 @@
 const jwt =require("jsonwebtoken")
-const mongoose = require("mongoose");
-const isValidObjectId = function (objectId) {
-  return mongoose.Types.ObjectId.isValid(objectId);
-};
+const { isValidObjectId} = require('../utils/validator');
 const blogModels= require("../models/blogModel.js")
 
 const authentication = async (req,res,next)=>{
@@ -37,7 +34,7 @@ const authentication = async (req,res,next)=>{
        
        // Store Decoded Token User Id into request header named as userId
        req.decodedToken = decoded;
-       
+       console.log(decoded)
        // Now Simply Next the flow 
        next();
       }
