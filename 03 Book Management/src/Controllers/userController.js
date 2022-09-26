@@ -146,7 +146,7 @@ const login = async (req,res)=>{
         const token = jwt.sign({ userId: user._id.toString()}, "Book-Management", {expiresIn:"10h"});
 
         // Send the token to Response Header
-        res.setHeader("x-api-key", token);
+        res.setHeader('authorization', token);
 
         // send response to  user that Author is successfully logged in
         return res.status(200).send({status: true, message: "Author login successfully", data: { token }});

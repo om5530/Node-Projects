@@ -18,7 +18,7 @@ const createBook = async (req, res) => {
     }
 
     // Object Destructing
-    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt, reviews, isDeleted } = reqBody;
+    let { title, excerpt, userId, ISBN, category, subcategory, releasedAt, reviews } = reqBody;
 
     // Check Title is Coming Or not
     if (!validator.isValid(title)) {
@@ -190,9 +190,8 @@ const getAllBooks = async (req, res) => {
       if (! bookData.length) {
         return res.status(404).send({ status: false, message: 'Books Not Found With these Filters or might be deleted ' });
       }
-
       // After all Send book in response
-      return res.status(200).send({ status: true, message: 'Book Lists', data: bookData })
+      return res.status(200).send({ status: true, message: 'Book Lists', bookCount:bookData.length, data: bookData })
     }
 
   } catch (err) {
@@ -232,14 +231,14 @@ const getById = async (req, res) => {
 
         // use Spread operator for adding new key 
         const { ...data1 } = bookData;
-
+        //  console.log('>')
         // Add key reviewsData
         data1._doc.reviewsData = reviews
 
         return res.status(200).send({ status: true, message: 'Booklist', data: data1._doc })
 
       } else {
-
+        // console.log('<')
         // Send the Empty array provided by find 
 
         // use Spread operator for adding new key 
@@ -275,8 +274,11 @@ const updateById = async (req, res) => {
     let validBook = await bookModel.findOne({ _id: bookId, isDeleted: false })
     if (!validBook) return res.status(404).send({ status: false, message: "No book found" })
 
+
+    // console.log(validBook.userId.toString());
+    // console.log(req.decodedToken);
     // AUTHORIZATION
-    if (validBook.userId.toString() !== req.decodedToken) {
+    if (validBook.userId.toString() !== req.decodedToken.userId) {
       return res.status(403).send({ satus: false, message: `Unauthorized access! Owner info doesn't match` })
     }
 
@@ -372,7 +374,7 @@ const deletedById = async (req, res) => {
     // console.log(book);
 
     // AUTHORIZATION 
-    if (book.userId.toString() != req.decodedToken) {
+    if (book.userId.toString() != req.decodedToken.userId) {
       return res.status(403).send({ satus: false, message: `Unauthorized access! Owner info doesn't match` })
     }
 

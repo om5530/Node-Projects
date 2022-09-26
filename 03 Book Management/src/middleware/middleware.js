@@ -2,16 +2,25 @@ const jwt =require("jsonwebtoken")
 
 const authentication = async function(req,res,next){
 
-
     try{
 
     // take token from client 
-    let token = req.headers["x-Api-key"]
+    let token1 = req.headers['authorization'];
 
-    if( token == undefined ) { token= req.headers["x-api-key"] }
+    if( token1 == undefined ) { token = req.headers['Authorization']; }
 
-    //If no token is present in the request header return error
-    if (!token) return res.status(401).send({ status: false, msg: "Token must be present" });
+     const authHeader = req.headers.authorization;
+     // if No token found then send error
+     if (!token1 || !authHeader.startsWith('Bearer ')) {
+       return res.status(401).send({
+         status: false,
+         msg: 'Authentication token is required',
+       });
+     }
+
+     // Split that Bearer Token
+     let token = token1.split(' ')[1];
+
 
     //if token is present then decode the token
     let decodedToken = jwt.verify(token,"Book-Management")
