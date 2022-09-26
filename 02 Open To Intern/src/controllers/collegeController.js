@@ -88,13 +88,13 @@ try{
 
         // First Check for Name of Colleges
         const duplicateNames = await collegeModel.findOne({ name: name });
-        if(duplicateNames !== null)  {
+        if(duplicateNames)  {
              return res.status(409).send({ status: false, msg: "Name is Already Exists" })
         }
 
          // Then Check for Full Name of Colleges
          const duplicateFullNames = await collegeModel.findOne({fullName:fullName});
-         if(duplicateFullNames !== null){
+         if(duplicateFullNames){
              return res.status(409).send({ status: false, msg: "College Full Name is Already Exists" })
            }
     }
