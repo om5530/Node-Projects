@@ -1,7 +1,7 @@
 {
   "name": "01-blogging-site",
   "version": "1.0.0",
-  "description": "- Author Model\r ```yaml\r { \r   fname: { mandatory},\r   lname: {mandatory}, \r   title: {mandatory, enum[Mr, Mrs, Miss]},\r   email: {mandatory, valid email, unique},\r   password: {mandatory,}\r }\r ```\r - Blogs Model\r ```yaml\r {\r   title: {mandatory},\r   body: {mandatory},\r   authorId: {mandatory, refs to author model},\r   tags: {array of string},\r   category: {string, mandatory, examples: [technology, entertainment, life style, food, fashion]},\r   subcategory: {array of string, examples[technology-[web development, mobile development, AI, ML etc]] },\r   deletedAt: {when the document is deleted},\r   isDeleted: {boolean, default: false},\r   publishedAt: {when the blog is published},\r   isPublished: {boolean, default: false},\r   createdAt : {timestamps},\r   updatedAt : {timestamps}\r }\r ```\r ### PHASE  - 1 \r ### Author APIs /authors\r - Create an author - atleast 5 authors\r - Create a author document from request body.\r   `Endpoint: BASE_URL/authors`",
+  "description": "",
   "main": "index.js",
   "dependencies": {
     "accepts": "^1.3.8",
