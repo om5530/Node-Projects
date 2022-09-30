@@ -97,9 +97,9 @@ const createProduct = async (req, res) => {
             return res.status(400).send({ status: false, message: `Please Enter Valid Product Style` })
         }
 
-        if( ! Array.isArray(availableSizes)){
-            return res.status(400).send({ status: false, message: `Available Sizes Must be an Type Of Array` })
-        }
+        // if(  !Array.isArray(availableSizes)){
+        //     return res.status(400).send({ status: false, message: `Available Sizes Must be an Type Of Array` })
+        // }
         // Validate the Available Sizes 
         if (availableSizes && ! validator.isValidSize(availableSizes)) {
             return res.status(400).send({ status: false, message: `Please Enter Valid Product Available Sizes` })

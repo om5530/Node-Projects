@@ -145,10 +145,10 @@ const createUser = async (req, res) => {
     }
 
     // Validate street
-    if (!validator.isValidString(address.shipping.street)) {
-      res.status(400).send({ status: false, message: 'Enter a valid Street' })
-      return
-    }
+    // if (!validator.isValidString(address.shipping.street)) {
+    //   res.status(400).send({ status: false, message: 'Enter a valid Street' })
+    //   return
+    // }
 
     if (!validator.isValid(address.shipping.city)) {
       res.status(400).send({ status: false, message: 'Shipping city is required' })
@@ -156,10 +156,10 @@ const createUser = async (req, res) => {
     }
 
     // Validate city
-    if (!validator.isValidString(address.shipping.city)) {
-      res.status(400).send({ status: false, message: 'Enter a valid city name' })
-      return
-    }
+    // if (!validator.isValidString(address.shipping.city)) {
+    //   res.status(400).send({ status: false, message: 'Enter a valid city name' })
+    //   return
+    // }
 
     if (validString.test(address.shipping.city))
       return res.status(400).send({ status: false, msg: "City name must be valid it should not contains numbers" });
@@ -185,10 +185,10 @@ const createUser = async (req, res) => {
     }
 
     // Validate street
-    if (!validator.isValidString(address.billing.street)) {
-      res.status(400).send({ status: false, message: 'Enter a valid billing street' })
-      return
-    }
+    // if (!validator.isValidString(address.billing.street)) {
+    //   res.status(400).send({ status: false, message: 'Enter a valid billing street' })
+    //   return
+    // }
 
     if (!validator.isValid(address.billing.city)) {
       res.status(400).send({ status: false, message: 'billing city is required' })
@@ -196,10 +196,10 @@ const createUser = async (req, res) => {
     }
 
     // Validate city
-    if (!validator.isValidString(address.billing.city)) {
-      res.status(400).send({ status: false, message: 'Enter a valid billing city name' })
-      return
-    }
+    // if (!validator.isValidString(address.billing.city)) {
+    //   res.status(400).send({ status: false, message: 'Enter a valid billing city name' })
+    //   return
+    // }
 
     if (validString.test(address.billing.city))
       return res.status(400).send({ status: false, msg: "billing city name must be valid it should not contains numbers" });
@@ -311,7 +311,6 @@ const getUserById = async (req, res) => {
 
     // Extract userId from Params
     let userId = req.params.userId;
-
     // if userId is not a valid ObjectId
     if (!validator.isValidobjectId(userId)) {
       return res.status(400).send({ status: false, message: "UserId is invalid" });
@@ -329,10 +328,11 @@ const getUserById = async (req, res) => {
     }
 
     // Finally fetch the user
-    res.status(200).send({ status: true, message: "User Fetched Sucessfully", data: userDoc });
+   return res.status(200).send({ status: true, message: "User Fetched Sucessfully", data: userDoc });
 
-  } catch (err) {
-    res.status(400).send({ status: false, message: "Internal Server Error", error: err.message });
+  } 
+  catch (err) {
+   return res.status(400).send({ status: false, message: "Internal Server Error", error: err.message });
   }
 
 };
@@ -422,8 +422,8 @@ const updateUserById = async (req, res) => {
     }
 
     //Updating the Address
+    if(address){
     address = JSON.parse(address);
-    // console.log(address);
 
     // updating address street
     if (address.shipping.street && !validator.isValidString(address.shipping.street)) {
@@ -465,6 +465,7 @@ const updateUserById = async (req, res) => {
       return res.status(400).send({ status: false, message: 'Invalid pincode' });
     }
     updatedData['address.billing.pincode'] = address.billing.pincode
+  }
 
 
     //Updating the Profile Picture

@@ -23,14 +23,14 @@ router.put('/products/:productId',    updateProductById)
 router.delete('/products/:productId', deleteProductById)
 
 //----------- CART API'S(PROTECTED ROUTES)
-router.post('/users/:userId/cart',                   createCart)
+router.post('/users/:userId/cart',   authentication, createCart)
 router.put('/users/:userId/cart',    authentication, updateCartById)
 router.get('/users/:userId/cart',    authentication, getCartById   )
 router.delete('/users/:userId/cart', authentication, deleteCartById)
 
 //----------- ORDER API'S
-router.post('/users/:userId/orders', placeOrder)
-router.put ('/users/:userId/orders', authentication, updateOrderById)
+router.post('/users/:userId/orders', authentication, placeOrder)
+router.put('/users/:userId/orders', authentication, updateOrderById)
 
 // EXPORTING ROUTER
 module.exports = router;

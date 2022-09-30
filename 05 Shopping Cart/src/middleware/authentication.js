@@ -30,19 +30,14 @@ const authentication = async (req, res, next) => {
        
        // Store Decoded Token User Id into request header named as userId
        req.userId = decoded.userId;
-       
        // Now Simply Next the flow 
        next();
       }
-    });
-
-    
-
-    next()
+    })
   }
   catch (err) {
     console.log("This is the error :", err.message)
-    res.status(500).send({ msg: "Error", error: err.message })
+  return  res.status(500).send({ msg: "Error", error: err.message })
   }
 };
 

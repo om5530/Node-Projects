@@ -202,7 +202,7 @@ const updateCartById = async (req, res) => {
         }
 
         // Cart ID from user and cart ID from body matches or not 
-        if (isCartExist._id != cartId) {
+        if ((isCartExist._id).toString() != cartId) {
             return res.status(400).send({ status: false, message: "CartId and user do not match" })
         }
 
@@ -242,7 +242,7 @@ const updateCartById = async (req, res) => {
         const itemList = isCartExist.items
         
         // Take ID List in variable through map
-        let idList = itemList.map((ele) => { ele = ele.productId.toString() })
+        let idList = itemList.map((ele) => {return  ele = ele.productId.toString() })
         let index = idList.indexOf(productId)
 
         // Check if index is equal to -1 then throw error
